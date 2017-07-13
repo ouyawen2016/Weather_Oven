@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_534fb8d67844e4d7eb007c4a8d2bf11376e137ad.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="09b98989d1db8ee192b943f0885424de5ccd6bc1">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_a197167be51553b99547bb516942b1f05544caa5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.2.1_3e7a2ff42d95fb2136e7617dbbfd0e146f8e304a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.2.1_2fbbeec2e5c9a5bc136f5ec1f582337a00e4045e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e16776df83559a223fa93b961476ae9aa05c42d4">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\instant-run_0907ba31daae6fc672de3b2a3cb0e8bcc6a6cd21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-24.2.1_d46f888ece548b65ec7eeed1abd38246571a679f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-24.2.1_1ef09d91488acdc49d0c990ff21b61c4fdc3a7c1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.2.1_147425b896d8f5c63bebc23a4529d5e3b5598984.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_d33cf9725682056abee360b394741776ad6ce8c0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_e6f0aae3a696436fd1684dc0890ccbc869b89d49.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_e4af5aff56f29f80b3955040e0169fa9ee89e93d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-24.2.1_de0404cff46430d2dcb4f4b756ec374838005e9e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-24.2.1_61b6efece9f74a52e41e5c0019b862b6e0a2172f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.2.1_4ab6190ae985c43c0f755e724b205ffce6bf63a8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-24.2.1_401c157c35a3e469182104890a5f54e514be8e5f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_b8a7e915a39c2bd8a493c9fb9d7d76bcfa0ede4f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\AndoridSDK\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_67cf1ba49ad97bf388fa10555f2682ab49b31570.jar" />
+    </item>
+
+</items>
