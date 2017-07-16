@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/weatherTitle_rl"
+    android:background="#708090">
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/degree_tv_weatherTitle"
+        android:layout_toEndOf="@+id/title_tv_"
+        android:layout_alignStart="@+id/title_tv_"
+        android:layout_alignParentTop="true"
+        android:textColor= "#fff"
+        android:textSize="60sp"/>
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_tv_"
+        android:layout_above="@+id/degree_tv_weatherTitle"
+        android:textSize="16sp"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+</LinearLayout>

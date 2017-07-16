@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.oven.weather_oven.bean.City;
 import com.oven.weather_oven.bean.County;
 import com.oven.weather_oven.bean.Province;
+import com.oven.weather_oven.bean.Weather;
 
 
 import org.json.JSONArray;
@@ -96,7 +97,59 @@ public class JSONUtil {
         }
         return null;
     }
+    //如果使用GSON这里可以先一键生成javaBean
+    public static Weather handleWeatherResponse(String response) {
+        try {
+            JSONObject mHeWeather = new JSONObject(response);
+            JSONArray HeWeather = mHeWeather.getJSONArray("HeWeather5");
+            JSONObject weatherContent = HeWeather.getJSONObject(0);
+            Weather weather = new Weather();
+            weather.setStatus(weatherContent.getString("status"));
+            //Basic
+            JSONObject JSONbasic = weatherContent.getJSONObject("basic");
+            Weather.Basic basic = weather.new Basic();
+            basic.setCity(JSONbasic.getString("city"));
+            basic.setId(JSONbasic.getString("id"));
+            weather.setBasics(basic);
+
+            //TODO:AQI,SUGGESTION,NOW 
+
+
+            /*
+            JSONObject aqi = weatherContent.getJSONObject("aqi");
+            Weather.aqi aqi1 = weather.new aqi();
+            aqi1.(JSONbasic.getString("city"));
+            aqi1.setId(JSONbasic.getString("id"));
+            weather.setBasics(basic);
+            JSONObject basic = weatherContent.getJSONObject("basic");
+            JSONObject basic = weatherContent.getJSONObject("basic");
+            JSONObject basic = weatherContent.getJSONObject("basic");
+            */
+            JSONObject nTep = weatherContent.getJSONObject("now");
+            weather.temperature = nTep.getString("tmp");
+
+            //Forecast
+            List<Weather.DailyForecast> forecasts = new ArrayList<>();
+            JSONArray dailyForecast = weatherContent.getJSONArray("daily_forecast");
+            for(int i = 0;i < dailyForecast.length();i ++){
+                JSONObject daily = dailyForecast.getJSONObject(i);
+                Weather.DailyForecast dailyForecast1 =  weather.new DailyForecast();
+                dailyForecast1.setDate(daily.getString("date"));
+                JSONObject cond = daily.getJSONObject("cond");
+                dailyForecast1.setMore(cond.getString("txt_d"));
+                JSONObject tmp = daily.getJSONObject("tmp");
+                dailyForecast1.setTmp(tmp.getString("max"),tmp.getString("min"));
+               forecasts.add(dailyForecast1);
+            }
+            weather.setDailyForecasts(forecasts);
+
+            return weather;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
-//
+
 
 

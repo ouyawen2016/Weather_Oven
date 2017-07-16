@@ -19,7 +19,7 @@ public class HttpUtil {
     private static String PROVINCE ="http://guolin.tech/api/china";
 
 
-    private static String WEATHER = "https://free-api.heweather.com/v5/Weather?city=";
+    private static String WEATHERapi = "https://free-api.heweather.com/v5/weather?city=";
     private static String KEY = "&key=4da8587ec7104e7a94a6d623607b334f";
 
     public static String getProvince()throws IOException{
@@ -30,38 +30,41 @@ public class HttpUtil {
         return sendHttpRequest(CITY);
     }
     public static String getCounty(int provinceCode,int CityCode)throws IOException{
-        String COUNTY = PROVINCE +"/"+provinceCode+"/"+CityCode ;
+        String COUNTY = PROVINCE +"/"+ provinceCode+"/"+CityCode ;
         return sendHttpRequest(COUNTY);
     }
-
+    public static String getWeather(String weatherId) throws IOException{
+        String WEATHER = WEATHERapi + weatherId + KEY;
+        return sendHttpRequest(WEATHER);
+    }
     private static String sendHttpRequest(final String address) throws IOException {
         HttpURLConnection connection = null;
         try {
-                URL url = new URL(address);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setConnectTimeout(8000);
-                connection.setReadTimeout(8000);
-                connection.setDoInput(true);
-                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
-                    InputStream in = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-                        reader.close();
-                        return response.toString();
-                } else{
-                        throw new IOException("Network Error - response code:" + connection.getResponseCode());
-                    }
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
+            URL url = new URL(address);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(8000);
+            connection.setReadTimeout(8000);
+            connection.setDoInput(true);
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
                 }
+                reader.close();
+                return response.toString();
+            } else {
+                throw new IOException("Network Error - response code:" + connection.getResponseCode());
             }
+        }finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
 
 
     public static Bitmap getImageBitmap(String url){

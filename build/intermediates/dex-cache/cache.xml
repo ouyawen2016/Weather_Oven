@@ -3,21 +3,21 @@
 
     <item
         is-multidex="false"
+        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a41ae8f31996e2a6b30c91fc0d837971423cfd3a">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_a197167be51553b99547bb516942b1f05544caa5.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
         <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_534fb8d67844e4d7eb007c4a8d2bf11376e137ad.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\0.oven_doing\Weather_Oven\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="09b98989d1db8ee192b943f0885424de5ccd6bc1">
-        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_a197167be51553b99547bb516942b1f05544caa5.jar" />
     </item>
     <item
         is-multidex="false"
@@ -43,7 +43,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="e16776df83559a223fa93b961476ae9aa05c42d4">
+        sha1="29cdc02815ef8de166b59c4a4d00779dfca75912">
         <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\instant-run_0907ba31daae6fc672de3b2a3cb0e8bcc6a6cd21.jar" />
     </item>
     <item

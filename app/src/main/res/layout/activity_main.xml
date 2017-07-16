@@ -9,7 +9,7 @@
         <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.oven.weather_oven.ui.ChooseAreaFragment"
+            android:name="com.oven.weather_oven.ui.ChooseArea"
             android:id="@+id/chooseArea_frg_main" />
     </FrameLayout>
 
