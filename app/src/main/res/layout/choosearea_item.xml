@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/areaList_item_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <TextView
         android:id="@+id/area_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        tools:text="something" />
+</LinearLayout>

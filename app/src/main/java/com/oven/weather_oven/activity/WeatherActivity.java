@@ -3,7 +3,6 @@ package com.oven.weather_oven.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,13 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oven.weather_oven.Base.ActivityCollector;
-import com.oven.weather_oven.Base.BaseActivity;
+import com.oven.weather_oven.base.ActivityCollector;
+import com.oven.weather_oven.base.BaseActivity;
 
 import com.oven.weather_oven.R;
 import com.oven.weather_oven.bean.Weather;
@@ -45,6 +45,7 @@ public class WeatherActivity extends BaseActivity {
     private Weather preWeather;
     public SwipeRefreshLayout swipeRefresh;
     private WeatherReceiver mWeatherBroadcast;
+    private Button mbutton;
 
     public static final int SUCESS = 0;
     private Handler handler = new Handler() {
@@ -73,6 +74,7 @@ public class WeatherActivity extends BaseActivity {
         forecastLayout = (LinearLayout) findViewById(R.id.forecast_ll);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        mbutton = (Button)findViewById(R.id.choose_area_btn_title);
         final String weatherID = getIntent().getStringExtra("weather_id");
         weatherLayout.setVisibility(View.INVISIBLE);
         getWeather(weatherID);
@@ -109,22 +111,22 @@ public class WeatherActivity extends BaseActivity {
     }
 
     public void showWeather(Weather weather) {
-        String cityName = weather.basics.getCity();
-        String weatherId = weather.basics.getId();
-        String degeree = weather.temperature + "℃";
+        String cityName = weather.basic.city;
+        String weatherId = weather.basic.id;
+        String degeree = weather.now.tmp+ "℃";
         title.setText(cityName);
         degree.setText(degeree);
         forecastLayout.removeAllViews();
-        for (Weather.DailyForecast dailyForecast : weather.dailyForecasts) {
+        for (Weather.DailyForecastBean dailyForecast: weather.dailyForecast) {
             View view = LayoutInflater.from(this).inflate(R.layout.forecast_item, forecastLayout, false);
             TextView dateText = (TextView) view.findViewById(R.id.day1_tv_forecastItem);
             TextView max = (TextView) view.findViewById(R.id.day2_tv_forecastItemtextView2);
             TextView min = (TextView) view.findViewById(R.id.day3_tv_forecastItemtextView3);
             TextView info = (TextView) view.findViewById(R.id.day4_tv_forecastItemtextView4);
-            dateText.setText(dailyForecast.getDate());
-            max.setText(dailyForecast.getMax());
-            min.setText(dailyForecast.getMin());
-            info.setText(dailyForecast.getMore());
+            dateText.setText(dailyForecast.date);
+            max.setText(dailyForecast.tmp.max);
+            min.setText(dailyForecast.tmp.min);
+            info.setText(dailyForecast.cond.txtD);
             forecastLayout.addView(view);
 
         }
@@ -136,7 +138,7 @@ public class WeatherActivity extends BaseActivity {
 
         Intent intent = new Intent(this, AutoUpdateService.class);
         intent.putExtra("weather_id", weatherId);
-        startService(intent);
+        //startService(intent);
     }
 
 
@@ -145,10 +147,10 @@ public class WeatherActivity extends BaseActivity {
        /*
         * 创建并动态注册广播接收器
         */
-        mWeatherBroadcast = new WeatherReceiver();
+       /* mWeatherBroadcast = new WeatherReceiver();
         IntentFilter filter = new IntentFilter();// 过滤出更新天气的广播
         filter.addAction("WEATHER_UPDATE_ACTION");
-        registerReceiver(mWeatherBroadcast, filter);// 注册广播
+        registerReceiver(mWeatherBroadcast, filter);// 注册广播*/
         super.onStart();
 
 
@@ -156,7 +158,7 @@ public class WeatherActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mWeatherBroadcast);//注销广播接收器
+        //unregisterReceiver(mWeatherBroadcast);//注销广播接收器
         stopService(new Intent(WeatherActivity.this, AutoUpdateService.class));//停止前台服务
         super.onDestroy();
     }
@@ -169,20 +171,16 @@ public class WeatherActivity extends BaseActivity {
 
 
     class WeatherReceiver extends BroadcastReceiver {
-        public WeatherReceiver() {
-        }
-
         @Override
         public void onReceive(Context context, Intent intent) {
             //收到广播后开启weatherActivity的getWeather,
-            try {
-                Weather mweather =  JSONUtil.handleWeatherResponse(HttpUtil.getWeather(intent.getStringExtra("weather_id")));
 
-                intent.putExtra("degree",mweather.temperature);
-                intent.putExtra("city",mweather.new Basic().getCity());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+              getWeather(intent.getStringExtra("weather_id"));
+                Weather mWeather =  preWeather;
+
+                intent.putExtra("degree",mWeather.now.tmp);
+                intent.putExtra("city",mWeather.basic.city);
+
 
 
         }

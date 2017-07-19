@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffff">
+    android:background="@color/白">
     <android.support.v4.widget.SwipeRefreshLayout
 
         android:layout_width="match_parent"
@@ -23,6 +23,7 @@
 
         <include layout="@layout/title"/>
         <include layout="@layout/forecast"/>
+
         </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.oven.weather_oven.Base.ActivityCollector;
-import com.oven.weather_oven.Base.BaseActivity;
+
+import com.oven.weather_oven.adapter.AreaAdapter;
+import com.oven.weather_oven.base.ActivityCollector;
+import com.oven.weather_oven.base.BaseActivity;
 import com.oven.weather_oven.R;
 import com.oven.weather_oven.bean.City;
 import com.oven.weather_oven.bean.County;
@@ -26,23 +31,25 @@ import java.util.List;
 
 //TODO:做下切换按钮
 public class ChooseAreaActivity extends BaseActivity{
-    public static final int LEVEL_PROVINCE = 0;
-    public static final int LEVEL_CITY = 1;
-    public static final int LEVEL_COUNTY = 2;
+    private static final int LEVEL_PROVINCE = 0;
+    private static final int LEVEL_CITY = 1;
+    private static final int LEVEL_COUNTY = 2;
     private static final int FAILURE = 3;
-    private ProgressDialog progressDialog;
+    //定义各种控件
+    private ProgressBar progressBar;
     private TextView titleTxt;
     private Button backBtn;
-    private ListView areaListview;
-    private ArrayAdapter<String> areaAdapter;
+   // private ListView areaListview;
+    private RecyclerView areaRecyclerview;
+    //private ArrayAdapter<String> areaAdapter;
+    AreaAdapter areaAdapter;
     private List<String> areaList = new ArrayList<>();
     private List<Province> provinceList;
     private List<City> cityList;
     private List<County> countyList;
     private Province selectProvince;
-    private County selectCounty;
     private City selectCity;
-    private int selectLevel;
+    public int selectLevel;
     private String response;
 
     private Handler handler = new Handler() {
@@ -57,7 +64,7 @@ public class ChooseAreaActivity extends BaseActivity{
                     }
                     titleTxt.setText("中国");
                     areaAdapter.notifyDataSetChanged();
-                    areaListview.setSelection(0);
+
                     selectLevel = LEVEL_PROVINCE;
                     break;
                 case LEVEL_CITY:
@@ -69,7 +76,7 @@ public class ChooseAreaActivity extends BaseActivity{
                     }
                     titleTxt.setText(selectProvince.getProvinceName());
                     areaAdapter.notifyDataSetChanged();
-                    areaListview.setSelection(0);
+
                     selectLevel = LEVEL_CITY;
                     break;
                 case LEVEL_COUNTY:
@@ -81,7 +88,7 @@ public class ChooseAreaActivity extends BaseActivity{
                     }
                     titleTxt.setText(selectCity.getCityName());
                     areaAdapter.notifyDataSetChanged();
-                    areaListview.setSelection(0);
+
                     selectLevel = LEVEL_COUNTY;
                     break;
                 case FAILURE:
@@ -102,15 +109,26 @@ public class ChooseAreaActivity extends BaseActivity{
         setContentView(R.layout.choose_area);
         titleTxt = (TextView) findViewById(R.id.title_tv_areaChoose);
         backBtn = (Button) findViewById(R.id.back_btn_areaChoose);
-        areaListview = (ListView) findViewById(R.id.areaList_lv_areaChoose);
-        areaAdapter = new ArrayAdapter<>(ChooseAreaActivity.this, R.layout.choosearea_item, areaList);
-        areaListview.setAdapter(areaAdapter);
+
+        /*
+         * RecyclerView实现地区列表
+         */
+
+        areaRecyclerview = (RecyclerView)findViewById(R.id.areaList_rv_areaChoose) ;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        areaRecyclerview.setLayoutManager(layoutManager);
+        areaAdapter = new AreaAdapter(areaList);
+        areaRecyclerview.setAdapter(areaAdapter);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+       // areaListview = (ListView) findViewById(R.id.areaList_lv_areaChoose);
+       // areaAdapter = new ArrayAdapter<>(ChooseAreaActivity.this, R.layout.choosearea_item, areaList);
+       // areaListview.setAdapter(areaAdapter);
 
 
         /**
          * 为通用地区列表设置监听
          */
-
+/*
         areaListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -129,7 +147,30 @@ public class ChooseAreaActivity extends BaseActivity{
                     startActivity(intent);
                 }
             }
+        });*/
+        areaAdapter.setOnItemClickListener(new AreaAdapter.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //判断当前所在列表级别
+                if (selectLevel == LEVEL_PROVINCE) {
+                    selectProvince = provinceList.get(position);
+                    getCitysFromServer(selectProvince.getProvinceCode());
+                } else if (selectLevel == LEVEL_CITY) {
+                    selectCity = cityList.get(position);
+                    getCountysFromServer(selectCity.getProvinceId(), selectCity.getCityCode());
+
+                } else if (selectLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                }
+
+            }
         });
+
+
 
         /**
          *
@@ -155,7 +196,7 @@ public class ChooseAreaActivity extends BaseActivity{
     public void onBackPressed() {
 
         ActivityCollector.finishAll();
-        Toast.makeText(ChooseAreaActivity.this,"再按一次退出",Toast.LENGTH_SHORT).show();
+        Toast.makeText(ChooseAreaActivity.this,"再按一次退出Weather_Oven",Toast.LENGTH_SHORT).show();
 
 
     }
@@ -235,20 +276,16 @@ public class ChooseAreaActivity extends BaseActivity{
      */
 
     private  void showPressDialog(){
-        if(progressDialog == null){
-            progressDialog = new ProgressDialog(ChooseAreaActivity.this);
-            progressDialog.setMessage("正在加载…");
-            progressDialog.setCancelable(false);
-        }
-        progressDialog.show();
+        if(progressBar.getVisibility() == View.GONE)
+            progressBar.setVisibility(View.VISIBLE);
     }
 
 
 
     private void closePressDialog(){
-        if(progressDialog != null){
-            progressDialog.dismiss();
-        }
+        if(progressBar.getVisibility() != View.GONE)
+            progressBar.setVisibility(View.GONE);
+
     }
 
 

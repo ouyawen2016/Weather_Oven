@@ -4,37 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/areaChoose_ll"
-    android:background="#fff">
+    android:background="@color/白">
 
 
     <RelativeLayout
+        android:id="@+id/areaChoose_rl"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/areaChoose_rl"
         android:background="?attr/colorPrimary">
 
         <Button
-            android:background="@mipmap/ic_back"
+            android:id="@+id/back_btn_areaChoose"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:id="@+id/back_btn_areaChoose" />
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/ic_back" />
 
         <TextView
-            android:text="中国"
+            android:id="@+id/title_tv_areaChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/title_tv_areaChoose"
             android:layout_centerInParent="true"
-            android:textSize="28sp"
-            android:textColor="#fff"/>
+            android:text="@string/China"
+            android:textColor="@color/白"
+            android:textSize="28sp" />
+
     </RelativeLayout>
 
-    <ListView
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/areaList_lv_areaChoose" />
+        android:layout_alignParentTop="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/areaList_rv_areaChoose"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
 </LinearLayout>

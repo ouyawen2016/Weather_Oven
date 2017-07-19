@@ -1,4 +1,4 @@
-package com.oven.weather_oven.Base;
+package com.oven.weather_oven.base;
 
 /**
  *
@@ -9,7 +9,6 @@ package com.oven.weather_oven.Base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 public class BaseActivity extends AppCompatActivity {
 

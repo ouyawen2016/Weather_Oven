@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weather_Oven</string>
+    <string name="China">中国</string>
 </resources>
