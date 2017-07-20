@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oven.weather_oven.adapter.AreaAdapter;
+import com.oven.weather_oven.adapter.AreaDividerItemDecoration;
 import com.oven.weather_oven.base.ActivityCollector;
 import com.oven.weather_oven.base.BaseActivity;
 import com.oven.weather_oven.R;
@@ -36,11 +37,11 @@ public class ChooseAreaActivity extends BaseActivity{
     private static final int LEVEL_COUNTY = 2;
     private static final int FAILURE = 3;
     //定义各种控件
-    private ProgressBar progressBar;
+    //private ProgressBar progressBar;
     private TextView titleTxt;
     private Button backBtn;
    // private ListView areaListview;
-    private RecyclerView areaRecyclerview;
+    private RecyclerView mareaRecyclerview;
     //private ArrayAdapter<String> areaAdapter;
     AreaAdapter areaAdapter;
     private List<String> areaList = new ArrayList<>();
@@ -114,12 +115,14 @@ public class ChooseAreaActivity extends BaseActivity{
          * RecyclerView实现地区列表
          */
 
-        areaRecyclerview = (RecyclerView)findViewById(R.id.areaList_rv_areaChoose) ;
+        mareaRecyclerview = (RecyclerView)findViewById(R.id.areaList_rv_areaChoose) ;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        areaRecyclerview.setLayoutManager(layoutManager);
+        mareaRecyclerview.setLayoutManager(layoutManager);
         areaAdapter = new AreaAdapter(areaList);
-        areaRecyclerview.setAdapter(areaAdapter);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        mareaRecyclerview.setAdapter(areaAdapter);
+        mareaRecyclerview.addItemDecoration(new AreaDividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+
+        //progressBar = (ProgressBar)findViewById(R.id.progressBar);
        // areaListview = (ListView) findViewById(R.id.areaList_lv_areaChoose);
        // areaAdapter = new ArrayAdapter<>(ChooseAreaActivity.this, R.layout.choosearea_item, areaList);
        // areaListview.setAdapter(areaAdapter);
@@ -170,8 +173,6 @@ public class ChooseAreaActivity extends BaseActivity{
             }
         });
 
-
-
         /**
          *
          * 载入省份列表
@@ -185,7 +186,7 @@ public class ChooseAreaActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
                 if (selectLevel == LEVEL_COUNTY) {
-                    getCitysFromServer(selectProvince.getId());
+                    getCitysFromServer(selectCity.getProvinceId());
                 } else if (selectLevel == LEVEL_CITY) {
                     getProincesFromServer();
                 }
@@ -208,7 +209,7 @@ public class ChooseAreaActivity extends BaseActivity{
             public void run() {
                 try {
                     response = HttpUtil.getCity(ProvinceId);
-                    cityList = JSONUtil.handleCityResponse(response, selectProvince.getId());
+                    cityList = JSONUtil.handleCityResponse(response, ProvinceId);
                     Message msg = new Message();
                     if (response == null)
                         msg.what = FAILURE;
@@ -275,7 +276,7 @@ public class ChooseAreaActivity extends BaseActivity{
      *  进度条
      */
 
-    private  void showPressDialog(){
+    /*private  void showPressDialog(){
         if(progressBar.getVisibility() == View.GONE)
             progressBar.setVisibility(View.VISIBLE);
     }
@@ -287,7 +288,7 @@ public class ChooseAreaActivity extends BaseActivity{
             progressBar.setVisibility(View.GONE);
 
     }
-
+*/
 
 
 

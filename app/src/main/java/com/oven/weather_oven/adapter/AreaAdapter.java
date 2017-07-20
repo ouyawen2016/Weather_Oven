@@ -5,16 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.oven.weather_oven.R;
-
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 
-/**AreaAdapter 地区列表的适应期
+/**AreaAdapter 地区列表的适应器
  *
  * Created by oven on 2017/7/18.
  */
@@ -58,6 +53,7 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.ViewHolder>{
     /**利用接口回调监听对应子项的点击事件
      *
      * @param listener
+     * 传入监听器
      */
     public void setOnItemClickListener(AreaAdapter.OnItemClickListener listener){
         this.onItemClickListener = listener;
