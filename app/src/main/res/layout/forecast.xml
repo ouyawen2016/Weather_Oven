@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/forecast_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="15dp"
-    android:background="@color/黑">
+    android:background="@color/黑"
+    android:orientation="vertical">
 
     <TextView
 
+        android:id="@+id/forecast_tv_forecast"
+        android:text = "@string/forecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/forecast_tv_forecast" />
+        android:textSize="20sp"
+        />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/forecast_rv_forecast_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/forecast_ll_forecast">
-
-    </LinearLayout>
+        android:layout_height="56dp" />
 
 </LinearLayout>

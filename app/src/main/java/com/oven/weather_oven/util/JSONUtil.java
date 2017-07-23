@@ -17,11 +17,16 @@ import java.util.List;
 
 
 /**
- * 解析服务器返回的json数据并处理
+ * 解析服务器返回的json数据并存入数据库
  * Created by oven on 2017/7/11.
  */
 
 public class JSONUtil {
+
+
+
+
+
 
     /**
      * 将返回的省级数据用jsonArray与jsonObject解析,并返回provinceList

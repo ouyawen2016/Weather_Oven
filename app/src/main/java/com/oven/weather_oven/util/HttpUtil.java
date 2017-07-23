@@ -7,96 +7,41 @@ package com.oven.weather_oven.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.oven.weather_oven.base.ContextProvider;
-
-import java.io.BufferedReader;
+import com.oven.weather_oven.base.MyApplication;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HttpUtil {
-    private static final String PROVINCE = "http://guolin.tech/api/china";
-    private static final String WEATHER_API = "https://free-api.heweather.com/v5/weather?city=";
-    private static final String KEY = "&key=4da8587ec7104e7a94a6d623607b334f";
-    private static final String BACK_SLASH = "/";
 
 
-
-    public static String getProvince()throws IOException{
-        return sendHttpRequest(PROVINCE);
-    }
-    public static String getCity(int provinceCode) throws IOException {
-        String CITY = PROVINCE + BACK_SLASH + provinceCode;
-        return sendHttpRequest(CITY);
-    }
-    public static String getCounty(int provinceCode,int CityCode)throws IOException{
-        String COUNTY = PROVINCE + BACK_SLASH + provinceCode + BACK_SLASH +CityCode ;
-        return sendHttpRequest(COUNTY);
-    }
-    public static String getWeather(String weatherId) throws IOException{
-        String WEATHER = WEATHER_API + weatherId + KEY;
-        return sendHttpRequest(WEATHER);
-    }
-    private static String sendHttpRequest(final String address) throws IOException {
-        HttpURLConnection connection = null;
-        try {
-            URL url = new URL(address);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(8000);
-            connection.setReadTimeout(8000);
-            connection.setDoInput(true);
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                InputStream in = connection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-                return response.toString();
-            } else {
-                throw new IOException("Network Error - response code:" + connection.getResponseCode());
-            }
-        }finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-
-
-    }
-/* String WEATHER = WEATHER_API + weatherId + KEY;
-        return sendHttpRequest(WEATHER);
-    }
-    private static String sendHttpRequest(final String address)  {
-        RequestQueue mQueue = Volley.newRequestQueue(ContextProvider.getContext());
-
+    private static RequestQueue mQueue = Volley.newRequestQueue(MyApplication.getContext());
+    public static void sendHttpRequest(final String address,
+                                        final VolleyResponseCallbackListener listener) {
         final StringRequest stringRequest = new StringRequest(address,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        final String mWeatherContext = response;
-                        //TODO：存入shareperfence或写个接口
+                        listener.onFinish(response);
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG",error.getLocalizedMessage());
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        listener.onError(error);
+
             }
         });
-        */
+
+      mQueue.add(stringRequest);
+    }
 
 
 

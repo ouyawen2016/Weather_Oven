@@ -3,13 +3,15 @@ package com.oven.weather_oven.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,17 +19,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oven.weather_oven.adapter.AreaDividerItemDecoration;
+import com.oven.weather_oven.adapter.ForecastAdapter;
 import com.oven.weather_oven.base.ActivityCollector;
 import com.oven.weather_oven.base.BaseActivity;
-
 import com.oven.weather_oven.R;
 import com.oven.weather_oven.bean.Weather;
 import com.oven.weather_oven.service.AutoUpdateService;
 import com.oven.weather_oven.util.HttpUtil;
 import com.oven.weather_oven.util.JSONUtil;
-
-import java.io.IOException;
-
+import com.oven.weather_oven.util.VolleyResponseCallbackListener;
 
 
 /**
@@ -37,22 +38,26 @@ import java.io.IOException;
 
 
 public class WeatherActivity extends BaseActivity {
-    private ScrollView weatherLayout;
-    private TextView title;
-    private TextView degree;
-    private LinearLayout forecastLayout;
-    public String response;
+    private ScrollView mweatherLayout;
+    private TextView mtitle;
+    private TextView mdegree;
+    private LinearLayout mforecastLayout;
+    public String mresponse;
     private Weather preWeather;
-    public SwipeRefreshLayout swipeRefresh;
+    public SwipeRefreshLayout mswipeRefresh;
     private WeatherReceiver mWeatherBroadcast;
     private Button mbutton;
+    private RecyclerView mForecastview;
+    private ForecastAdapter mForecastadapter;
+    private static final String WEATHER_API = "https://free-api.heweather.com/v5/weather?city=";
+    private static final String KEY = "&key=4da8587ec7104e7a94a6d623607b334f";
 
     public static final int SUCESS = 0;
     private Handler handler = new Handler() {
         public void handleMessage(Message meg) {
             switch (meg.what) {
                 case SUCESS:
-                    swipeRefresh.setRefreshing(false);
+                    mswipeRefresh.setRefreshing(false);
                     showWeather(preWeather);
                     break;
                 default:
@@ -68,69 +73,82 @@ public class WeatherActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        weatherLayout = (ScrollView) findViewById(R.id.weather_sv);
-        title = (TextView) findViewById(R.id.title_tv_);
-        degree = (TextView) findViewById(R.id.degree_tv_weatherTitle);
-        forecastLayout = (LinearLayout) findViewById(R.id.forecast_ll);
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        mweatherLayout = (ScrollView) findViewById(R.id.weather_sv);
+        mtitle = (TextView) findViewById(R.id.title_tv_);
+        mdegree = (TextView) findViewById(R.id.degree_tv_weatherTitle);
+        mforecastLayout = (LinearLayout) findViewById(R.id.forecast_ll);
+        mswipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        mswipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         mbutton = (Button)findViewById(R.id.choose_area_btn_title);
-        final String weatherID = getIntent().getStringExtra("weather_id");
-        weatherLayout.setVisibility(View.INVISIBLE);
+
+         final String weatherID = getIntent().getStringExtra("weather_id");
+
+        mweatherLayout.setVisibility(View.INVISIBLE);
+
         getWeather(weatherID);
 
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mswipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getWeather(weatherID);
+                requestWeather(weatherID);
             }
         });
 
 
+
+
+    }
+    public void  getWeather  (final String weatherId){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
+        mresponse = pref.getString("weather",null);
+        if(mresponse == null){
+            requestWeather(weatherId);
+        }
+        else {
+            preWeather = JSONUtil.handleWeatherResponse(mresponse);
+            showWeather(preWeather);
+        }
     }
 
-    public void getWeather(final String weatherId) {
-        new Thread(new Runnable() {
+    public void requestWeather(final String weatherId) {
+        String WeatherAddress = WEATHER_API + weatherId + KEY;
+        HttpUtil.sendHttpRequest(WeatherAddress, new VolleyResponseCallbackListener() {
             @Override
-            public void run() {
-                try {
-                    response = HttpUtil.getWeather(weatherId);
-                    preWeather = JSONUtil.handleWeatherResponse(response);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onFinish(String response) {
+                SharedPreferences.Editor editor =PreferenceManager.
+                        getDefaultSharedPreferences(WeatherActivity.this).edit();
+                editor.putString("weather",response);
+                editor.apply();
+                preWeather = JSONUtil.handleWeatherResponse(response);
                 Message meg = new Message();
                 meg.what = SUCESS;
                 handler.sendMessage(meg);
-
             }
-        }).start();
 
-
+            @Override
+            public void onError(Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void showWeather(Weather weather) {
         String cityName = weather.basic.city;
         String weatherId = weather.basic.id;
         String degeree = weather.now.tmp+ "℃";
-        title.setText(cityName);
-        degree.setText(degeree);
-        forecastLayout.removeAllViews();
-        for (Weather.DailyForecastBean dailyForecast: weather.dailyForecast) {
-            View view = LayoutInflater.from(this).inflate(R.layout.forecast_item, forecastLayout, false);
-            TextView dateText = (TextView) view.findViewById(R.id.day1_tv_forecastItem);
-            TextView max = (TextView) view.findViewById(R.id.day2_tv_forecastItemtextView2);
-            TextView min = (TextView) view.findViewById(R.id.day3_tv_forecastItemtextView3);
-            TextView info = (TextView) view.findViewById(R.id.day4_tv_forecastItemtextView4);
-            dateText.setText(dailyForecast.date);
-            max.setText(dailyForecast.tmp.max);
-            min.setText(dailyForecast.tmp.min);
-            info.setText(dailyForecast.cond.txtD);
-            forecastLayout.addView(view);
+        mtitle.setText(cityName);
+        mdegree.setText(degeree);
 
-        }
-        weatherLayout.setVisibility(View.VISIBLE);
+        // mforecastLayout.removeAllViews();
+
+        mForecastview = (RecyclerView)findViewById(R.id.forecast_rv_forecast_list) ;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mForecastview.setLayoutManager(layoutManager);
+        mForecastadapter = new ForecastAdapter(weather.dailyForecast);
+        mForecastview.setAdapter(mForecastadapter);
+        mForecastview.addItemDecoration(new AreaDividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+
+        mweatherLayout.setVisibility(View.VISIBLE);
 
         /*
          * 更新一次天气状况后开启AutoUpdateService
