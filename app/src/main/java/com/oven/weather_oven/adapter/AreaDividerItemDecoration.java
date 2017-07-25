@@ -20,8 +20,8 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
     };
-    public static final int HORIZONTAL_LTST = LinearLayoutManager.HORIZONTAL;
-    public static final int VERTICAL_LTST = LinearLayoutManager.VERTICAL;
+    private static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
+    private static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
     /**
      * 绘制间隔样式
      */
@@ -43,8 +43,8 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
             super.onDraw(c, parent, state);
             //绘制间隔
-            if (mOrientation == VERTICAL_LTST) {
-                drawVerical(c, parent);
+            if (mOrientation == VERTICAL_LIST) {
+                drawVertical(c, parent);
             } else {
                 drawHorizontal(c, parent);
             }
@@ -54,7 +54,7 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-            if (mOrientation == VERTICAL_LTST) {
+            if (mOrientation == VERTICAL_LIST) {
                 outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
             } else {
                 outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
@@ -63,7 +63,7 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
 
 
     private void setOrientation(int orientation) {
-        if (orientation != HORIZONTAL_LTST && orientation != VERTICAL_LTST) {
+        if (orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST) {
             throw new IllegalArgumentException("invalid orientation");
         }
         mOrientation = orientation;
@@ -71,11 +71,8 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 绘制间隔竖直列表
-     * @param c
-     * @param parent
-     *
      */
-    private  void drawVerical(Canvas c,RecyclerView parent){
+    private  void drawVertical(Canvas c,RecyclerView parent){
     final  int left = parent.getPaddingLeft();
     final  int right = parent.getWidth() - parent.getPaddingRight();
     final  int childCount = parent.getChildCount();
@@ -83,8 +80,8 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
         final View child = parent.getChildAt(i);
         final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)child.getLayoutParams();
         final int top = child.getBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
-        final int buttom = top + mDivider.getIntrinsicHeight();
-        mDivider.setBounds(left,top,right,buttom);
+        final int button = top + mDivider.getIntrinsicHeight();
+        mDivider.setBounds(left,top,right,button);
         mDivider.draw(c);
         }
     }

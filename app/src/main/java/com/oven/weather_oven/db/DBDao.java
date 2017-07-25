@@ -1,14 +1,12 @@
 package com.oven.weather_oven.db;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
+import com.oven.weather_oven.base.MyApplication;
 import com.oven.weather_oven.bean.City;
 import com.oven.weather_oven.bean.County;
 import com.oven.weather_oven.bean.Province;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,19 +16,12 @@ import java.util.List;
  */
 
 public class DBDao {
-    private Context mcontext;
-    private AreaDBHelper areaDBHelper;
-    /*
-    *传入如context
-     */
-    public DBDao(Context context){
-        this.mcontext = context;
-        areaDBHelper = new AreaDBHelper(context);
-    }
 
+    private AreaDBHelper areaDBHelper = new AreaDBHelper(MyApplication.getContext());
     /**
      * 将省级列表存入数据库
      * @param provinceList
+     * 传入省级列表
      */
     public void initProvinceTable(List<Province> provinceList){
         SQLiteDatabase db = areaDBHelper.getWritableDatabase();
@@ -46,12 +37,13 @@ public class DBDao {
 
     /**
      * 将市级列表存入数据库
-     * @param citylist
+     * @param cityList
+     * 传入城市列表
      */
-    public void initCityTable(List<City> citylist){
+    public void initCityTable(List<City> cityList){
         SQLiteDatabase db = areaDBHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        for(City city:citylist){
+        for(City city:cityList){
             values.put("CityName",city.getCityName());
             values.put("ProvinceId",city.getProvinceId());
             values.put("CityId",city.getCityCode());
@@ -64,6 +56,7 @@ public class DBDao {
     /**
      * 将县级列表存入数据库
      * @param countyList
+     * 传入县级列表
      */
 
     public void initCountyTable(List<County>countyList,int ProvinceId){
@@ -79,6 +72,11 @@ public class DBDao {
         }
         db.close();
     }
+
+    /**
+     * 从数据库中查询省份
+     * @return List<Province>
+     */
    public List<Province> queryProvince(){
        List<Province> provinceList = new ArrayList<>();
        SQLiteDatabase db = areaDBHelper.getWritableDatabase();
@@ -97,9 +95,15 @@ public class DBDao {
        db.close();
        return provinceList;
    }
+
+    /**
+     * @param provinceId
+     * 传入的省份ID
+     * @return List<City> 城市列表
+     */
+
+
    public List<City> queryCity(int provinceId){
-
-
        List<City> cityList = new ArrayList<>();
        SQLiteDatabase db = areaDBHelper.getWritableDatabase();
        Cursor cursor = db.query("city",null,"ProvinceId = "+ provinceId,null,null,null,null);
@@ -118,8 +122,17 @@ public class DBDao {
        db.close();
        return cityList;
    }
-    public List<County> querycountry(int provinceId,int cityId){
-        List<County> countylist = new ArrayList<>();
+
+    /**
+     *
+     * @param provinceId
+     * 省份ID
+     * @param cityId
+     * 城市ID
+     *@return list<County><
+     */
+    public List<County> queryCountry(int provinceId,int cityId){
+        List<County> countyList = new ArrayList<>();
         SQLiteDatabase db = areaDBHelper.getWritableDatabase();
         Cursor cursor = db.query("county",null,"CityId = "+ cityId + " and ProvinceId = "+ provinceId ,null,null,null,null);
         if(cursor.moveToFirst()){
@@ -130,12 +143,12 @@ public class DBDao {
                 county.setCityId(cityId);
                 county.setCountyName(countyName);
                 county.setWeatherId(weatherId);
-                countylist.add(county);
+                countyList.add(county);
             }while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return countylist;
+        return countyList;
     }
 
 

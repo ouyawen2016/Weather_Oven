@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/suggestions"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:background="@color/accent">
+
+    <TextView
+        android:id="@+id/sport_title_tv_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        tools:text = "something" />
+
+    <TextView
+        android:id="@+id/sport_txt_tv_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        tools:text = "something"  />
+
+    <TextView
+        android:id="@+id/dress_title_tv_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        tools:text = "something"  />
+
+    <TextView
+        android:id="@+id/dress_txt_tv_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        tools:text = "something"  />
+
+    <TextView
+        android:id="@+id/feeling_title_tv_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/feeling_txt_tv_suggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        tools:text="TextView" />
+</LinearLayout>

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Weather_Oven</string>
     <string name="China">中国</string>
-    <string name="forecast">预报</string>
+    <string name="forecast">未来三日天气预报</string>
 </resources>

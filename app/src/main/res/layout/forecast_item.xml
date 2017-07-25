@@ -11,7 +11,10 @@
 
         android:layout_width="0dp"
         android:layout_weight="1.03"
+
         android:layout_height="wrap_content"
+        android:textColor="@color/secondary_text"
+        android:textSize="15sp"
         android:id="@+id/item_forecast_tv_cityName"
         tools:text ="something"/>
 
@@ -21,6 +24,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         tools:text ="something"
+        android:textColor="@color/secondary_text"
+        android:textSize="15sp"
         android:id="@+id/item_forecast_tv_weather" />
 
     <TextView
@@ -29,6 +34,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         tools:text ="something"
+        android:textColor="@color/secondary_text"
+        android:textSize="15sp"
         android:id="@+id/item_forecast_tv_max_degree" />
 
     <TextView
@@ -37,12 +44,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text ="something"
+        android:textColor="@color/secondary_text"
+        android:textSize="15sp"
         android:id="@+id/item_forecast_tv_min_degree" />
 
     <ImageView
         android:id="@+id/item_forecast_iv_weather"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="36dp"
         app:srcCompat="@mipmap/ic_launcher" />
 </LinearLayout>

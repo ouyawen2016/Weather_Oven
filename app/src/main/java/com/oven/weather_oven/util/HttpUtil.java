@@ -7,12 +7,9 @@ package com.oven.weather_oven.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.oven.weather_oven.base.MyApplication;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +19,6 @@ import java.net.URL;
 
 public class HttpUtil {
 
-
-    private static RequestQueue mQueue = Volley.newRequestQueue(MyApplication.getContext());
     public static void sendHttpRequest(final String address,
                                         final VolleyResponseCallbackListener listener) {
         final StringRequest stringRequest = new StringRequest(address,
@@ -40,7 +35,7 @@ public class HttpUtil {
             }
         });
 
-      mQueue.add(stringRequest);
+      MyApplication.getQueue().add(stringRequest);
     }
 
 

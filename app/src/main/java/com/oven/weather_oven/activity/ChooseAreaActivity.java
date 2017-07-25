@@ -1,5 +1,6 @@
 package com.oven.weather_oven.activity;
 
+
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -8,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.oven.weather_oven.adapter.AreaAdapter;
@@ -16,6 +16,7 @@ import com.oven.weather_oven.adapter.AreaDividerItemDecoration;
 import com.oven.weather_oven.base.ActivityCollector;
 import com.oven.weather_oven.base.BaseActivity;
 import com.oven.weather_oven.R;
+import com.oven.weather_oven.base.MyApplication;
 import com.oven.weather_oven.bean.City;
 import com.oven.weather_oven.bean.County;
 import com.oven.weather_oven.bean.Province;
@@ -24,7 +25,7 @@ import com.oven.weather_oven.util.HttpUtil;
 import com.oven.weather_oven.util.JSONUtil;
 import com.oven.weather_oven.util.VolleyResponseCallbackListener;
 
-import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,130 +35,131 @@ public class ChooseAreaActivity extends BaseActivity {
     private static final int LEVEL_CITY = 1;
     private static final int LEVEL_COUNTY = 2;
     private static final int FAILURE = 3;
-    //定义各种控件
 
-    private TextView titleTxt;
-    private Button backBtn;
+    //声明各种成员变量
+    private TextView mTitleTxt;
+    private Button mBackBtn;
+    private AreaAdapter mAreaAdapter;
+    private List<String> mAreaList = new ArrayList<>();
+    private List<Province> mProvinceList;
+    private List<City> mCityList;
+    private List<County> mCountyList;
+    private Province mSelectProvince;
+    private City mSelectCity;
+    public int mSelectLevel;
+    private DBDao mAreaDao;
+    private MyHandler mHandler;
 
-    private RecyclerView mareaRecyclerview;
-    private AreaAdapter areaAdapter;
-    private List<String> areaList = new ArrayList<>();
-    private List<Province> provinceList;
-    private List<City> cityList;
-    private List<County> countyList;
-    private Province selectProvince;
-    private City selectCity;
-    public int selectLevel;
-    private String response;
-    private DBDao areaDao;
     private static final String PROVINCE = "http://guolin.tech/api/china";
-
     private static final String BACK_SLASH = "/";
 
-    private Handler handler = new Handler() {
+    private static class MyHandler extends Handler {
+        private WeakReference<ChooseAreaActivity> mReference;
+        private MyHandler(ChooseAreaActivity activity){
+            mReference= new WeakReference<>(activity);
+        }
         public void handleMessage(Message msg) {
+            ChooseAreaActivity mActivity = mReference.get();
             switch (msg.what) {
                 case LEVEL_PROVINCE:
-                    showProvinceList();
+                    mActivity.showProvinceList();
 
                     break;
                 case LEVEL_CITY:
-                    showCItyList();
+                    mActivity.showCItyList();
 
                     break;
                 case LEVEL_COUNTY:
-                    showCountyList();
+                    mActivity.showCountyList();
 
                     break;
                 case FAILURE:
                     //closePressDialog();
-
-                    Toast.makeText(ChooseAreaActivity.this, "加载失败，请检查网络", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "加载失败，请检查网络", Toast.LENGTH_SHORT).show();
                 default:
                     break;
             }
 
         }
 
-    };
+    }
 
     private void showCountyList() {
         //closePressDialog();
 
-        backBtn.setVisibility(View.VISIBLE);
-        areaList.clear();
-        for (County county : countyList) {
-            areaList.add(county.getCountyName());
+        mBackBtn.setVisibility(View.VISIBLE);
+        mAreaList.clear();
+        for (County county : mCountyList){
+            mAreaList.add(county.getCountyName());
         }
-        titleTxt.setText(selectCity.getCityName());
-        areaAdapter.notifyDataSetChanged();
+        mTitleTxt.setText(mSelectCity.getCityName());
+        mAreaAdapter.notifyDataSetChanged();
 
-        selectLevel = LEVEL_COUNTY;
+        mSelectLevel = LEVEL_COUNTY;
     }
 
     private void showCItyList() {
         // closePressDialog();
 
-        backBtn.setVisibility(View.VISIBLE);
-        areaList.clear();
-        for (City city : cityList) {
-            areaList.add(city.getCityName());
+        mBackBtn.setVisibility(View.VISIBLE);
+       mAreaList.clear();
+        for (City city : mCityList) {
+            mAreaList.add(city.getCityName());
         }
-        titleTxt.setText(selectProvince.getProvinceName());
-        areaAdapter.notifyDataSetChanged();
+        mTitleTxt.setText(mSelectProvince.getProvinceName());
+        mAreaAdapter.notifyDataSetChanged();
 
-        selectLevel = LEVEL_CITY;
+        mSelectLevel = LEVEL_CITY;
     }
 
     private void showProvinceList() {
         //closePressDialog();
-        backBtn.setVisibility(View.GONE);
-        areaList.clear();
-        for (Province province : provinceList) {
-            areaList.add(province.getProvinceName());
+       mBackBtn.setVisibility(View.GONE);
+        mAreaList.clear();
+        for (Province province : mProvinceList) {
+            mAreaList.add(province.getProvinceName());
         }
-        titleTxt.setText("中国");
-        areaAdapter.notifyDataSetChanged();
+        mTitleTxt.setText("中国");
+        mAreaAdapter.notifyDataSetChanged();
 
-        selectLevel = LEVEL_PROVINCE;
+        mSelectLevel = LEVEL_PROVINCE;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_area);
-        titleTxt = (TextView) findViewById(R.id.title_tv_areaChoose);
-        backBtn = (Button) findViewById(R.id.back_btn_areaChoose);
+        mTitleTxt = (TextView) findViewById(R.id.title_tv_areaChoose);
+        mBackBtn = (Button) findViewById(R.id.back_btn_areaChoose);
 
         /*
          * RecyclerView实现地区列表
          */
-
-        mareaRecyclerview = (RecyclerView) findViewById(R.id.areaList_rv_areaChoose);
+        RecyclerView mAreaRecyclerView = (RecyclerView) findViewById(R.id.areaList_rv_areaChoose);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mareaRecyclerview.setLayoutManager(layoutManager);
-        areaAdapter = new AreaAdapter(areaList);
-        mareaRecyclerview.setAdapter(areaAdapter);
-        mareaRecyclerview.addItemDecoration(new AreaDividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        mAreaRecyclerView.setLayoutManager(layoutManager);
+        mAreaAdapter = new AreaAdapter(mAreaList);
+        mAreaRecyclerView.setAdapter(mAreaAdapter);
+        mAreaRecyclerView.addItemDecoration(new AreaDividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         /*
          * 为通用地区列表设置监听
          */
 
-        areaAdapter.setOnItemClickListener(new AreaAdapter.OnItemClickListener() {
+        mAreaAdapter.setOnItemClickListener(new AreaAdapter.OnItemClickListener() {
 
             @Override
             public void onItemClick(View view, int position) {
                 //判断当前所在列表级别
-                if (selectLevel == LEVEL_PROVINCE) {
-                    selectProvince = provinceList.get(position);
-                    queryCity(selectProvince.getProvinceCode());
-                } else if (selectLevel == LEVEL_CITY) {
-                    selectCity = cityList.get(position);
-                    queryCounty(selectCity.getProvinceId(),
-                            selectCity.getCityCode());
-                } else if (selectLevel == LEVEL_COUNTY) {
-                    String weatherId = countyList.get(position).getWeatherId();
+                if (mSelectLevel == LEVEL_PROVINCE) {
+                    mSelectProvince = mProvinceList.get(position);
+                    queryCity(mSelectProvince.getProvinceCode());
+                } else if (mSelectLevel == LEVEL_CITY) {
+                    mSelectCity = mCityList.get(position);
+                    queryCounty(mSelectCity.getProvinceId(),
+                            mSelectCity.getCityCode());
+                } else if (mSelectLevel == LEVEL_COUNTY) {
+                    String weatherId = mCountyList.get(position).getWeatherId();
                     Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
                     intent.putExtra("weather_id", weatherId);
                     startActivity(intent);
@@ -170,12 +172,12 @@ public class ChooseAreaActivity extends BaseActivity {
          * 为返回按钮设置监听
          */
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
+       mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectLevel == LEVEL_COUNTY) {
-                    queryCity(selectCity.getProvinceId());
-                } else if (selectLevel == LEVEL_CITY) {
+                if (mSelectLevel == LEVEL_COUNTY) {
+                    queryCity(mSelectCity.getProvinceId());
+                } else if (mSelectLevel == LEVEL_CITY) {
                     queryProvince();
                 }
             }
@@ -183,7 +185,9 @@ public class ChooseAreaActivity extends BaseActivity {
 
         //初始化数据库设置
 
-        areaDao = new DBDao(this);
+        mAreaDao = new DBDao();
+        //初始化 Handler
+        mHandler = new MyHandler(this);
 
         /*
          *
@@ -201,20 +205,20 @@ public class ChooseAreaActivity extends BaseActivity {
 
     }
 
-    private void getCitysFromServer(final int ProvinceId) {
+    private void getCityFromServer(final int ProvinceId) {
         //showPressDialog();
         String CityAddress = PROVINCE + BACK_SLASH + ProvinceId;
         HttpUtil.sendHttpRequest(CityAddress, new VolleyResponseCallbackListener() {
             @Override
             public void onFinish(String response) {
-                cityList = JSONUtil.handleCityResponse(response, ProvinceId);
-                areaDao.initCityTable(cityList);
+                mCityList = JSONUtil.handleCityResponse(response, ProvinceId);
+                mAreaDao.initCityTable(mCityList);
                 Message msg = new Message();
                 if (response == null)
                     msg.what = FAILURE;
                 else
                     msg.what = LEVEL_CITY;
-                handler.sendMessage(msg);
+                mHandler.sendMessage(msg);
             }
 
             @Override
@@ -225,20 +229,20 @@ public class ChooseAreaActivity extends BaseActivity {
 
     }
 
-    private void getCountysFromServer(final int provinceId, final int cityId) {
+    private void getCountyFromServer(final int provinceId, final int cityId) {
         //showPressDialog();
         String CountyAddress = PROVINCE + BACK_SLASH + provinceId + BACK_SLASH + cityId;
         HttpUtil.sendHttpRequest(CountyAddress, new VolleyResponseCallbackListener() {
             @Override
             public void onFinish(String response) {
-                countyList = JSONUtil.handleCountyResponse(response, selectCity.getId());
-                areaDao.initCountyTable(countyList, provinceId);
+                mCountyList = JSONUtil.handleCountyResponse(response, mSelectCity.getId());
+                mAreaDao.initCountyTable(mCountyList, provinceId);
                 Message msg = new Message();
                 if (response == null)
                     msg.what = FAILURE;
                 else
                     msg.what = LEVEL_COUNTY;
-                handler.sendMessage(msg);
+                mHandler.sendMessage(msg);
             }
 
             @Override
@@ -248,20 +252,20 @@ public class ChooseAreaActivity extends BaseActivity {
         });
     }
 
-    private void getProincesFromServer() {
+    private void getProvincesFromServer() {
         //showPressDialog();
 
         HttpUtil.sendHttpRequest(PROVINCE, new VolleyResponseCallbackListener() {
             @Override
             public void onFinish(String response) {
-                provinceList = JSONUtil.handleProvinceResponse(response);
-                areaDao.initProvinceTable(provinceList);
+                mProvinceList = JSONUtil.handleProvinceResponse(response);
+                mAreaDao.initProvinceTable(mProvinceList);
                 Message msg = new Message();
                 if (response == null)
                     msg.what = FAILURE;
                 else
                     msg.what = LEVEL_PROVINCE;
-                handler.sendMessage(msg);
+                mHandler.sendMessage(msg);
             }
             @Override
             public void onError(Exception e) {
@@ -272,34 +276,34 @@ public class ChooseAreaActivity extends BaseActivity {
     }
 
     public void queryProvince() {
-        provinceList = areaDao.queryProvince();
-        if (provinceList.size() > 0)
+        mProvinceList = mAreaDao.queryProvince();
+        if (mProvinceList.size() > 0)
             showProvinceList();
         else {
-            getProincesFromServer();
+            getProvincesFromServer();
 
         }
 
     }
 
     public void queryCity(int provinceId) {
-        cityList = areaDao.queryCity(provinceId);
-        if (cityList.size() > 0)
+        mCityList = mAreaDao.queryCity(provinceId);
+        if (mCityList.size() > 0)
             showCItyList();
         else {
-            getCitysFromServer(provinceId);
+            getCityFromServer(provinceId);
 
         }
 
 
     }
 
-    public void queryCounty(int provinceid, int cityid) {
-        countyList = areaDao.querycountry(provinceid,cityid);
-        if (countyList.size() > 0)
+    public void queryCounty(int provinceId, int cityId) {
+        mCountyList = mAreaDao.queryCountry(provinceId,cityId);
+        if (mCountyList.size() > 0)
             showCountyList();
         else {
-            getCountysFromServer(provinceid, cityid);
+            getCountyFromServer(provinceId, cityId);
 
         }
     }

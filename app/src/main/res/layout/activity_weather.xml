@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+
+<android.support.v4.widget.DrawerLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    android:background="@color/白">
+    android:layout_width="match_parent">
+
     <android.support.v4.widget.SwipeRefreshLayout
 
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe_refresh">
+        android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:overScrollMode="never"
-        android:id="@+id/weather_sv">
-
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/weather_sv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
-        <include layout="@layout/title"/>
-        <include layout="@layout/forecast"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
 
-        </LinearLayout>
+                <include layout="@layout/include_title" />
+
+                <include layout = "@layout/include_now" />
+
+                <include layout="@layout/include_forecast" />
+
+                <include layout="@layout/include_suggestions"/>
+
+            </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:textSize="30sp"
+        tools:text="THIS IS A MENU"/>
+</android.support.v4.widget.DrawerLayout>

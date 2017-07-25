@@ -19,7 +19,7 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.ViewHolder>{
     private AreaAdapter.OnItemClickListener onItemClickListener;
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView areaName;
-        public ViewHolder(View view){
+        private ViewHolder(View view){
             super(view);
             areaName = (TextView)view.findViewById(R.id.area_item);
         }
@@ -31,8 +31,7 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.choosearea_item,parent,false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
