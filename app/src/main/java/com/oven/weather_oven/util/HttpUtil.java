@@ -41,7 +41,8 @@ public class HttpUtil {
 
 
 
-    public static Bitmap getImageBitmap(String url){
+    public static Bitmap getImageBitmap(String weatherCode){
+        final String url = "https://cdn.heweather.com/cond_icon/"+weatherCode+".png";
         Bitmap bitmap = null;
         InputStream is = null;
         try {
@@ -65,6 +66,14 @@ public class HttpUtil {
         return bitmap;
     }
 
+/*
+    public static Bitmap getImageBitmap(String weatherCode){
+        final String url = "https://cdn.heweather.com/cond_icon/" + weatherCode + ".png";
+        RequestFuture<Bitmap> future = RequestFuture.newFuture();
+        ImageRequest imageRequest = new ImageRequest(url,);
+
+    }
+*/
 }
 
 

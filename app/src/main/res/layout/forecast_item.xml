@@ -16,7 +16,7 @@
         android:textColor="@color/secondary_text"
         android:textSize="15sp"
         android:id="@+id/item_forecast_tv_cityName"
-        tools:text ="something"/>
+        android:text ="something"/>
 
     <TextView
 
@@ -26,7 +26,8 @@
         tools:text ="something"
         android:textColor="@color/secondary_text"
         android:textSize="15sp"
-        android:id="@+id/item_forecast_tv_weather" />
+        android:id="@+id/item_forecast_tv_weather"
+        android:text ="something"/>
 
     <TextView
 
@@ -36,7 +37,8 @@
         tools:text ="something"
         android:textColor="@color/secondary_text"
         android:textSize="15sp"
-        android:id="@+id/item_forecast_tv_max_degree" />
+        android:id="@+id/item_forecast_tv_max_degree"
+        android:text ="something"/>
 
     <TextView
 
@@ -46,7 +48,8 @@
         tools:text ="something"
         android:textColor="@color/secondary_text"
         android:textSize="15sp"
-        android:id="@+id/item_forecast_tv_min_degree" />
+        android:id="@+id/item_forecast_tv_min_degree"
+        android:text ="something"/>
 
     <ImageView
         android:id="@+id/item_forecast_iv_weather"

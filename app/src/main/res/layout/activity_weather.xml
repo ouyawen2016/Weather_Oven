@@ -1,48 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v4.widget.DrawerLayout
-
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
-    <android.support.v4.widget.SwipeRefreshLayout
-
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ScrollView
-            android:id="@+id/weather_sv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="1">
-
-                <include layout="@layout/include_title" />
-
-                <include layout = "@layout/include_now" />
-
-                <include layout="@layout/include_forecast" />
-
-                <include layout="@layout/include_suggestions"/>
-
-            </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-    <TextView
+    <ScrollView
+        android:id="@+id/weather_sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:textSize="30sp"
-        tools:text="THIS IS A MENU"/>
-</android.support.v4.widget.DrawerLayout>
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <include layout="@layout/include_title" />
+
+            <include layout = "@layout/include_now" />
+
+            <include layout="@layout/include_forecast" />
+
+            <include layout="@layout/include_suggestions"/>
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
+

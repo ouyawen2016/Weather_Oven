@@ -1,5 +1,6 @@
 package com.oven.weather_oven.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.oven.weather_oven.R;
 import com.oven.weather_oven.bean.Weather;
+import com.oven.weather_oven.util.HttpUtil;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ import java.util.List;
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHolder>{
         private List<Weather.DailyForecastBean> mForecastList;
+        private Bitmap bitmap;
+        private int mPosition;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
             TextView mCityName;
@@ -47,11 +51,18 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        mPosition = holder.getAdapterPosition();
         holder.mWeather.setText(mForecastList.get(position).cond.txtD);
         holder.mDegreeMin.setText(mForecastList.get(position).tmp.min);
         holder.mDegreeMax.setText(mForecastList.get(position).tmp.max);
         holder.mCityName.setText(mForecastList.get(position).date);
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bitmap = HttpUtil.getImageBitmap(mForecastList.get(mPosition).cond.codeD);
+            }
+        }).start();
+        holder.mWeatherImg.setImageBitmap(bitmap);
     }
 
         @Override

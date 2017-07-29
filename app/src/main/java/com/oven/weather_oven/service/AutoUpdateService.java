@@ -16,7 +16,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 
 import com.oven.weather_oven.R;
-import com.oven.weather_oven.activity.WeatherActivity;
+import com.oven.weather_oven.activity.WeatherFragment;
 
 
 public class AutoUpdateService extends Service {
@@ -48,7 +48,7 @@ public class AutoUpdateService extends Service {
         /*
          *前台服务，显示实时天气，activity消失一起消失
          */
-        Intent intent1 = new Intent(this, WeatherActivity.class);
+        Intent intent1 = new Intent(this, WeatherFragment.class);
         PendingIntent pi1 = PendingIntent.getActivity(this,0,intent1,0);
         Notification notification = new NotificationCompat.Builder(this)
                 //.setContentTitle(bundle.getString("temperature"))
