@@ -23,8 +23,8 @@
         android:textColor= "@color/primary_light"
         android:textSize="20sp"
         tools:text="Something"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
         android:layout_centerVertical="true" />
 
 

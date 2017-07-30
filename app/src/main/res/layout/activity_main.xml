@@ -8,7 +8,7 @@
         android:id = "@+id/choose_area_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name = "com.oven.weather_oven.activity.ChooseArea"
+        android:name = "com.oven.weather_oven.fragment.ChooseArea"
         tools:layout="@layout/choose_area" />
 </FrameLayout>
 

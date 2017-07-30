@@ -5,21 +5,27 @@
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/include_title" />
+
+        <include layout="@layout/include_title"
+            android:id="@+id/include" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_weather_vp_weather_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/include">
+
         </android.support.v4.view.ViewPager>
-    </LinearLayout>
+
+    </RelativeLayout>
     <fragment
             android:id = "@+id/choose_area_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name = "com.oven.weather_oven.activity.ChooseArea"
+            android:name = "com.oven.weather_oven.fragment.ChooseArea"
             android:layout_gravity="start"
             tools:layout="@layout/choose_area">
         </fragment>
