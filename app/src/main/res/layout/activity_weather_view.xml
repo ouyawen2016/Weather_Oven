@@ -5,16 +5,23 @@
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
         <include layout="@layout/include_title" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_weather_vp_weather_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v4.view.ViewPager>
+
     </LinearLayout>
+
     <fragment
             android:id = "@+id/choose_area_fragment"
             android:layout_width="match_parent"
@@ -23,5 +30,6 @@
             android:layout_gravity="start"
             tools:layout="@layout/choose_area">
         </fragment>
+
     </android.support.v4.widget.DrawerLayout>
 

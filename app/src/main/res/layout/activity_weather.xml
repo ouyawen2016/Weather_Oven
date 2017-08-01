@@ -17,8 +17,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:weightSum="1">
-            <include layout="@layout/include_title" />
-
             <include layout = "@layout/include_now" />
 
             <include layout="@layout/include_forecast" />

@@ -15,8 +15,10 @@ import java.util.List;
  */
 
 public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.ViewHolder>{
+
     private List<String> mAreaList;
     private AreaAdapter.OnItemClickListener onItemClickListener;
+
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView areaName;
         private ViewHolder(View view){
@@ -57,12 +59,11 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.ViewHolder>{
     public void setOnItemClickListener(AreaAdapter.OnItemClickListener listener){
         this.onItemClickListener = listener;
     }
+
     @Override
     public int getItemCount() {
-
         return mAreaList == null ? 0 : mAreaList.size();
     }
-
 
     public  interface OnItemClickListener{
         void onItemClick(View view,int position);

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/weatherTitle_rl"
     android:background="@color/Primary">
 
@@ -14,18 +14,4 @@
         android:layout_marginStart="10dp"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_home" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/update_title_tv_title"
-        android:textColor= "@color/primary_light"
-        android:textSize="20sp"
-        tools:text="Something"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true" />
-
-
 </RelativeLayout>

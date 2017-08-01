@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Lenovo\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.4.0\ea392375cf9ff59234a82e7928a204215ccc98cd\butterknife-annotations-8.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ea392375cf9ff59234a82e7928a204215ccc98cd">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\butterknife-annotations-8.4.0_da6e7b912d3d9f2d6c3606c3e1b0b3ad973e900f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Lenovo\.android\build-cache\744d091d2f7338071a2e888989fe945c50ec48f4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a07818a1ecabdb149998823429cce555af4b9cba">
+        <dex dex="D:\0.oven_doing\Weather_Oven\app\build\intermediates\pre-dexed\debug\classes_84d8b4daaa6d336175753b7b39c79899242d6aaa.jar" />
+    </item>
+
+</items>

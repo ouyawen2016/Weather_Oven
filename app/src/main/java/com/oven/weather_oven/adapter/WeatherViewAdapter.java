@@ -4,7 +4,7 @@ package com.oven.weather_oven.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +15,12 @@ import java.util.List;
  */
 
 public class WeatherViewAdapter extends FragmentStatePagerAdapter {
-   private List<Fragment> mFragmentList = new ArrayList<>();//利用一个 list 将 fragment 缓存
-   private FragmentManager mFragmentManager;
-    public  WeatherViewAdapter(FragmentManager fm, List<Fragment> fragments) {
-        super(fm);
-        this.mFragmentManager = fm;
+
+    private List<Fragment> mFragmentList = new ArrayList<>();//利用一个 list 将 fragment 缓存
+    private FragmentManager mFragmentManager;
+
+    public WeatherViewAdapter(FragmentManager fragmentManager, List<Fragment> fragments) {
+        super(fragmentManager);
         this.mFragmentList = fragments;
     }
 

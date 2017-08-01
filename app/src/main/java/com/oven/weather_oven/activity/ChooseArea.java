@@ -1,4 +1,5 @@
 package com.oven.weather_oven.activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.oven.weather_oven.adapter.AreaAdapter;
 import com.oven.weather_oven.adapter.AreaDividerItemDecoration;
 import com.oven.weather_oven.R;
@@ -26,16 +28,18 @@ import com.oven.weather_oven.ui.LoadingFragment;
 import com.oven.weather_oven.util.HttpUtil;
 import com.oven.weather_oven.util.JSONUtil;
 import com.oven.weather_oven.util.VolleyResponseCallbackListener;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
 public class ChooseArea extends Fragment {
+
     private static final int LEVEL_PROVINCE = 0;
     private static final int LEVEL_CITY = 1;
     private static final int LEVEL_COUNTY = 2;
     private static final int FAILURE = 3;
 
-    //声明各种成员变量
     private TextView mTitleTxt;
     private Button mBackBtn;
     private AreaAdapter mAreaAdapter;
@@ -87,29 +91,27 @@ public class ChooseArea extends Fragment {
 
     private void showCountyList() {
         closePressDialog();
-
         mBackBtn.setVisibility(View.VISIBLE);
         mAreaList.clear();
         for (County county : mCountyList) {
             mAreaList.add(county.getCountyName());
         }
+
         mTitleTxt.setText(mSelectCity.getCityName());
         mAreaAdapter.notifyDataSetChanged();
-
         mSelectLevel = LEVEL_COUNTY;
     }
 
     private void showCItyList() {
         closePressDialog();
-
         mBackBtn.setVisibility(View.VISIBLE);
         mAreaList.clear();
         for (City city : mCityList) {
             mAreaList.add(city.getCityName());
         }
+
         mTitleTxt.setText(mSelectProvince.getProvinceName());
         mAreaAdapter.notifyDataSetChanged();
-
         mSelectLevel = LEVEL_CITY;
     }
 
@@ -120,19 +122,18 @@ public class ChooseArea extends Fragment {
         for (Province province : mProvinceList) {
             mAreaList.add(province.getProvinceName());
         }
+
         mTitleTxt.setText("中国");
         mAreaAdapter.notifyDataSetChanged();
         mSelectLevel = LEVEL_PROVINCE;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.choose_area,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.choose_area, container, false);
         mTitleTxt = (TextView) view.findViewById(R.id.title_tv_areaChoose);
         mBackBtn = (Button) view.findViewById(R.id.back_btn_areaChoose);
-        /*
-         * RecyclerView实现地区列表
-         */
+        // RecyclerView实现地区列表
         RecyclerView mAreaRecyclerView = (RecyclerView) view.findViewById(R.id.areaList_rv_areaChoose);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mAreaRecyclerView.setLayoutManager(layoutManager);
@@ -146,11 +147,7 @@ public class ChooseArea extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        /*
-         * 为通用地区列表设置监听
-         */
-
+        //为通用地区列表设置监听
         mAreaAdapter.setOnItemClickListener(new AreaAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -164,20 +161,16 @@ public class ChooseArea extends Fragment {
                             mSelectCity.getCityCode());
                 } else if (mSelectLevel == LEVEL_COUNTY) {
                     String weatherId = mCountyList.get(position).getWeatherId();
-                    //判断一下在哪里，在chooseArea就直接跳转新页面，在天气页面就关闭菜单刷新请求
-                    if(getActivity() instanceof MainActivity) {
-                        Intent intent = new Intent(getActivity(),WeatherViewActivity.class);
+                    //判断一下所在 activity，在 chooseArea 就直接跳转新页面，在天气页面就关闭菜单刷新请求
+                    if (getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), WeatherViewActivity.class);
                         intent.putExtra("weather_id", weatherId);
                         startActivity(intent);
                         getActivity().finish();
-                    }else if (getActivity() instanceof WeatherViewActivity) {
+                    } else if (getActivity() instanceof WeatherViewActivity) {
                         WeatherViewActivity activity = (WeatherViewActivity) getActivity();
                         activity.mDrawerLayout.closeDrawers();
-
                         activity.refresh(weatherId);
-                        //TODO:与activity通信，传递weatherID
-                        //activity.mSwipeRefresh.setRefreshing(true);
-                        //activity.requestWeather(weatherId)}
                     }
                 }
 
@@ -187,7 +180,6 @@ public class ChooseArea extends Fragment {
         /*
          * 为返回按钮设置监听
          */
-
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,17 +200,13 @@ public class ChooseArea extends Fragment {
         /*
          * 载入省份列表
          */
-
         queryProvince();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-
     }
-
     private void getCityFromServer(final int ProvinceId) {
         showPressDialog();
         String CityAddress = PROVINCE + BACK_SLASH + ProvinceId;
@@ -234,7 +222,6 @@ public class ChooseArea extends Fragment {
                     msg.what = LEVEL_CITY;
                 mHandler.sendMessage(msg);
             }
-
             @Override
             public void onError(Exception e) {
                 e.printStackTrace();
@@ -268,7 +255,6 @@ public class ChooseArea extends Fragment {
 
     private void getProvincesFromServer() {
         showPressDialog();
-
         HttpUtil.sendHttpRequest(PROVINCE, new VolleyResponseCallbackListener() {
             @Override
             public void onFinish(String response) {
@@ -307,10 +293,7 @@ public class ChooseArea extends Fragment {
             showCItyList();
         else {
             getCityFromServer(provinceId);
-
         }
-
-
     }
 
     public void queryCounty(int provinceId, int cityId) {
@@ -319,30 +302,22 @@ public class ChooseArea extends Fragment {
             showCountyList();
         else {
             getCountyFromServer(provinceId, cityId);
-
         }
     }
-
-
 
     /*
      *  LoadingFragment 实现进度条
      */
-
     private void showPressDialog() {
         mLoading = new LoadingFragment();
         FragmentTransaction pressDialog = getActivity().getSupportFragmentManager().beginTransaction();
         mLoading.show(pressDialog, "loading");
-
-
     }
-
     private void closePressDialog() {
-        if (mLoading != null){
+        if (mLoading != null) {
             mLoading.dismiss();
             mLoading = null;
         }
-
     }
 
 

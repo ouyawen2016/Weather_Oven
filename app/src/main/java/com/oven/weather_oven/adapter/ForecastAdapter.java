@@ -19,10 +19,10 @@ import java.util.List;
  * Created by oven on 2017/7/20.
  */
 
-public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHolder>{
-        private List<Weather.DailyForecastBean> mForecastList;
-        private Bitmap bitmap;
-        private int mPosition;
+public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHolder> {
+    private List<Weather.DailyForecastBean> mForecastList;
+    private Bitmap bitmap;
+    private int mPosition;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
             TextView mCityName;
@@ -51,6 +51,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         mPosition = holder.getAdapterPosition();
         holder.mWeather.setText(mForecastList.get(position).cond.txtD);
         holder.mDegreeMin.setText(mForecastList.get(position).tmp.min);
@@ -67,7 +68,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
 
         @Override
         public int getItemCount() {
-
             return mForecastList == null ? 0 : mForecastList.size();
         }
 

@@ -6,6 +6,8 @@ import android.content.Context;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 
 /**
@@ -18,12 +20,14 @@ public class MyApplication extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
     private static RequestQueue mQueue;
+
     public void onCreate(){
         super.onCreate();
         mContext = getApplicationContext();
         mQueue = Volley.newRequestQueue(mContext);
-
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
+
     public static Context getContext() {
         return mContext;
     }

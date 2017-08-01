@@ -14,9 +14,10 @@
         android:layout_marginEnd="15dp"
         android:textColor="@color/primary_light"
         android:textSize="60sp"
-        tools:text = "30"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        tools:text="30"
+        android:layout_alignTop="@+id/weather_icon_iv_now"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="18dp" />
 
     <TextView
         android:id="@+id/city_tv_now"
@@ -81,6 +82,14 @@
         android:layout_below="@+id/wind"
         android:layout_alignEnd="@+id/wind"
         android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/weather_update_time_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/degree_tv_now" />
 
 
 </RelativeLayout>

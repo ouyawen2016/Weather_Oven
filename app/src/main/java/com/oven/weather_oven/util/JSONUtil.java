@@ -23,11 +23,6 @@ import java.util.List;
 
 public class JSONUtil {
 
-
-
-
-
-
     /**
      * 将返回的省级数据用jsonArray与jsonObject解析,并返回provinceList
      */

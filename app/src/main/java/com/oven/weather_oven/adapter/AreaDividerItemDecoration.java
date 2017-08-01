@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- *
+ * Recycler 的通用划线类
  *
  * Created by oven on 2017/7/20.
  */
@@ -22,10 +22,12 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
     };
     private static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     private static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
+
     /**
      * 绘制间隔样式
      */
     private Drawable mDivider;
+
     /**
      * 列表的方向，水平/竖直
      */
@@ -72,7 +74,7 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
     /**
      * 绘制间隔竖直列表
      */
-    private  void drawVertical(Canvas c,RecyclerView parent){
+    private  void drawVertical(Canvas c, RecyclerView parent){
     final  int left = parent.getPaddingLeft();
     final  int right = parent.getWidth() - parent.getPaddingRight();
     final  int childCount = parent.getChildCount();
@@ -88,7 +90,7 @@ public class AreaDividerItemDecoration extends RecyclerView.ItemDecoration {
     /**
      *绘制间隔水平列表
      */
-    private  void drawHorizontal(Canvas c,RecyclerView parent){
+    private  void drawHorizontal(Canvas c, RecyclerView parent){
         final  int top = parent.getPaddingTop();
         final  int bottom = parent.getHeight() - parent.getPaddingBottom();
         final  int childCount = parent.getChildCount();

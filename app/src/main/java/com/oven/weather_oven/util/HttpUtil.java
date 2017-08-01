@@ -7,10 +7,11 @@ package com.oven.weather_oven.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.oven.weather_oven.base.MyApplication;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -35,14 +36,14 @@ public class HttpUtil {
             }
         });
 
-      MyApplication.getQueue().add(stringRequest);
+      com.oven.weather_oven.base.MyApplication.getQueue().add(stringRequest);
     }
 
 
 
 
     public static Bitmap getImageBitmap(String weatherCode){
-        final String url = "https://cdn.heweather.com/cond_icon/"+weatherCode+".png";
+        final String url = "https://cdn.heweather.com/cond_icon/" + weatherCode + ".png";
         Bitmap bitmap = null;
         InputStream is = null;
         try {
