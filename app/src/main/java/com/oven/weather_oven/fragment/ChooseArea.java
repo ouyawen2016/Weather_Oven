@@ -1,5 +1,9 @@
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/ChooseArea.java
 package com.oven.weather_oven.activity;
 
+=======
+package com.oven.weather_oven.fragment;
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/ChooseArea.java
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -16,6 +20,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/ChooseArea.java
+=======
+import com.oven.weather_oven.activity.MainActivity;
+import com.oven.weather_oven.activity.WeatherViewActivity;
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/ChooseArea.java
 import com.oven.weather_oven.adapter.AreaAdapter;
 import com.oven.weather_oven.adapter.AreaDividerItemDecoration;
 import com.oven.weather_oven.R;

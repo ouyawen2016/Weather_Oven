@@ -18,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+=======
+        <activity android:name=".fragment.WeatherFragment" />
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162
 
         <service
             android:name=".service.AutoUpdateService"

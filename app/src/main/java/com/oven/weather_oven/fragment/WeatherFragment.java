@@ -1,4 +1,4 @@
-package com.oven.weather_oven.activity;
+package com.oven.weather_oven.fragment;
 
 //import android.content.BroadcastReceiver;
 
@@ -38,6 +38,7 @@ import butterknife.Unbinder;
  */
 public class WeatherFragment extends Fragment {
 
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/WeatherFragment.java
     @BindView(R.id.degree_tv_now)
     TextView mTVDegree;
     @BindView(R.id.city_tv_now)
@@ -149,9 +150,71 @@ public class WeatherFragment extends Fragment {
 
         handler = new WeatherHandler(this);
 
+=======
+//    public static WeatherFragment newInstance(String weatherId){
+//        WeatherFragment fragment = new WeatherFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("weather_id",weatherId);
+//        fragment.setArguments(bundle);
+//        return  fragment;
+//    }
+
+    private ScrollView mWeatherLayout;
+    private TextView mUpdate;
+    private TextView mSport;
+    private TextView mDress;
+    private TextView mComfortable;
+    private TextView mSportTip;
+    private TextView mDressTip;
+    private TextView mComfortableTip;
+    private TextView mDegree;
+    private TextView mAqi;
+    private TextView mWind;
+    private TextView mFeeling;
+    private TextView mCity;
+    private TextView mWeatherBrf;
+    private String weatherId ;
+    private Bitmap mWeatherPic;
+    private ImageView mWeatherIcon;
+    private View view;
+    private Weather preWeather;
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_weather_view,container,false);
+        initView();
+        //从sp中得到信息
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
+        String mResponse = pref.getString("weather",null);
+        preWeather = JSONUtil.handleWeatherResponse(mResponse);
+        showWeather(preWeather);
+        return view;
+    }
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        if(getArguments()!=null){
+//            weatherId = getArguments().getString("weather_id");
+//        }
+//
+//       //handler = new WeatherHandler(this);
+//
+//
+//
+//
+//       mWeatherLayout.setVisibility(View.INVISIBLE);
+//
+//
+//
+//
+//    }
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/WeatherFragment.java
 
         //mWeatherLayout.setVisibility(View.INVISIBLE);
 
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/WeatherFragment.java
         getWeather(mWeatherId);
 
 
@@ -194,6 +257,13 @@ public class WeatherFragment extends Fragment {
 
     public void showWeather(Weather weather) {
         mWeatherId = weather.basic.id;
+=======
+
+
+
+    public void showWeather(Weather weather) {
+        weatherId = weather.basic.id;
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/WeatherFragment.java
         String degree = weather.now.tmp + "℃";
         String feeling = weather.suggestion.comf.txt;
         String feelingTip = weather.suggestion.comf.brf;
@@ -209,6 +279,7 @@ public class WeatherFragment extends Fragment {
         String weatherBrf = weather.now.cond.txt;
         String weatherCode = weather.now.cond.code;
 
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/WeatherFragment.java
         mTVDegree.setText(degree);
         mTVFeelingTxtSuggestions.setText(feeling);
         mTVFeelingTitleSuggestions.setText(feelingTip);
@@ -225,13 +296,39 @@ public class WeatherFragment extends Fragment {
         initWeatherPic(weatherCode);
         mIVWeatherIcon.setImageBitmap(mWeatherPic);
 
+=======
+        mDegree.setText(degree);
+        mComfortable.setText(feeling);
+        mComfortableTip.setText(feelingTip);
+        mDress.setText(dress);
+        mDressTip.setText(dressTip);
+        mSport.setText(sport);
+        mSportTip.setText(sportTip);
+        mUpdate.setText(update);
+        mCity.setText(city);
+        mWeatherBrf.setText(weatherBrf);
+        mAqi.setText(aqi);
+        mFeeling.setText(feelingTmp);
+        mWind.setText(wind);
+        //initWeatherPic(weatherCode);
+        mWeatherIcon.setImageBitmap(mWeatherPic);
+
+
+        RecyclerView mForecastView = (RecyclerView) view.findViewById(R.id.forecast_rv_forecast_list);
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/WeatherFragment.java
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRVForecastForecastList.setLayoutManager(layoutManager);
         ForecastAdapter mForecastAdapter = new ForecastAdapter(weather.dailyForecast);
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/WeatherFragment.java
         mRVForecastForecastList.setAdapter(mForecastAdapter);
         mRVForecastForecastList.addItemDecoration(new AreaDividerItemDecoration(getActivity(),
                 LinearLayoutManager.VERTICAL));
 
+=======
+        mForecastView.setAdapter(mForecastAdapter);
+        mForecastView.addItemDecoration(new AreaDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        mWeatherLayout.setVisibility(View.VISIBLE);
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/WeatherFragment.java
 
         /*
          * 更新一次天气状况后开启AutoUpdateService
@@ -241,6 +338,15 @@ public class WeatherFragment extends Fragment {
         //intent.putExtra("weather_id", weatherId);
         //startService(intent);
     }
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/WeatherFragment.java
+=======
+//    private void initWeatherPic(final String code){
+//        new Thread() {
+//        public void run() {
+//            mWeatherPic = HttpUtil.getImageBitmap(code);
+//        }}.start();
+
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/WeatherFragment.java
 
     private void initWeatherPic(final String code) {
         new Thread() {
@@ -273,7 +379,43 @@ public class WeatherFragment extends Fragment {
     }*/
 
 
+<<<<<<< HEAD:app/src/main/java/com/oven/weather_oven/activity/WeatherFragment.java
     /*
+=======
+/*
+
+    class WeatherReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //收到广播后开启weatherActivity的getWeather,
+
+              getWeather(intent.getStringExtra("weather_id"));
+                Weather mWeather =  preWeather;
+
+                intent.putExtra("degree",mWeather.now.tmp);
+                intent.putExtra("city",mWeather.basic.city);
+*/
+private void initView() {
+    mWeatherLayout = (ScrollView) view.findViewById(R.id.weather_sv);
+    mUpdate = (TextView)view.findViewById(R.id.update_title_tv_title);
+    mAqi = (TextView)view.findViewById(R.id.aqi);
+    mCity = (TextView)view.findViewById(R.id.city_tv_now);
+    mDegree = (TextView)view.findViewById(R.id.degree_tv_now);
+    mFeeling = (TextView)view.findViewById(R.id.feelingTmp_tv_now);
+    mWind = (TextView)view.findViewById(R.id.wind);
+    mWeatherBrf = (TextView)view.findViewById(R.id.weather_brf_tv_now);
+    mComfortable = (TextView)view.findViewById(R.id.feeling_txt_tv_suggestions);
+    mSport = (TextView)view.findViewById(R.id.sport_txt_tv_suggestions);
+    mComfortableTip = (TextView)view.findViewById(R.id.feeling_title_tv_suggestions);
+    mSportTip = (TextView)view.findViewById(R.id.sport_title_tv_suggestions);
+    mDress = (TextView)view.findViewById(R.id.dress_txt_tv_suggestions);
+    mDressTip = (TextView)view.findViewById(R.id.dress_title_tv_suggestions);
+    mWeatherIcon = (ImageView)view.findViewById(R.id.weather_icon_iv_now) ;
+    //mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+    }
+
+}
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162:app/src/main/java/com/oven/weather_oven/fragment/WeatherFragment.java
 
         class WeatherReceiver extends BroadcastReceiver {
             @Override

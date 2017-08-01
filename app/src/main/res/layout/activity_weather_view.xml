@@ -5,6 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+<<<<<<< HEAD
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,20 +14,34 @@
         >
 
         <include layout="@layout/include_title" />
+=======
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/include_title"
+            android:id="@+id/include" />
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_weather_vp_weather_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/include">
+
         </android.support.v4.view.ViewPager>
 
+<<<<<<< HEAD
     </LinearLayout>
 
+=======
+    </RelativeLayout>
+>>>>>>> ed23025a6f15e34ed9aeb93286a26914bcb34162
     <fragment
             android:id = "@+id/choose_area_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name = "com.oven.weather_oven.activity.ChooseArea"
+            android:name = "com.oven.weather_oven.fragment.ChooseArea"
             android:layout_gravity="start"
             tools:layout="@layout/choose_area">
         </fragment>

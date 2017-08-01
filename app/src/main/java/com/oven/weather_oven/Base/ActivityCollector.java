@@ -24,6 +24,7 @@ public class ActivityCollector {
 
     public static void finishAll() {
 
+
         //结束程序
         if (new Date().getTime() - lastPressTime < 1000) {
             for (Activity activity : activities) {

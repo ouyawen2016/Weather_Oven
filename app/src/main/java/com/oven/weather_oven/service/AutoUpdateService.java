@@ -16,7 +16,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 
 import com.oven.weather_oven.R;
-import com.oven.weather_oven.activity.WeatherFragment;
+import com.oven.weather_oven.fragment.WeatherFragment;
 
 
 public class AutoUpdateService extends Service {
